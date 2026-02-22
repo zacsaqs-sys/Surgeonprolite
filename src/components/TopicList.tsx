@@ -11,9 +11,12 @@ export function TopicList({
     <div style={{ maxWidth: 900, margin: "0 auto", padding: 16 }}>
       <h1 style={{ marginBottom: 8 }}>Surgeon Pro Lite</h1>
 
-      <p style={{ marginTop: 0, opacity: 0.8 }}>
-        Choose a topic to read.
-      </p>
+      <p style={{ marginTop: 0, opacity: 0.8 }}>Choose a topic to read.</p>
+
+      {/* ✅ TEMP TEST LINE */}
+      <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 10 }}>
+        Count: {topics.length}
+      </div>
 
       <div style={{ display: "grid", gap: 12 }}>
         {topics.map((t) => (
@@ -30,14 +33,10 @@ export function TopicList({
               cursor: "pointer"
             }}
           >
-            <div style={{ fontSize: 18, fontWeight: 700 }}>
-              {t.title}
-            </div>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>{t.title}</div>
 
             {t.subtitle && (
-              <div style={{ marginTop: 4, opacity: 0.75 }}>
-                {t.subtitle}
-              </div>
+              <div style={{ marginTop: 4, opacity: 0.75 }}>{t.subtitle}</div>
             )}
           </button>
         ))}

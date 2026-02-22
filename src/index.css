@@ -1,14 +1,28 @@
+/* ===== Surgeon Pro Minimal Dark Theme ===== */
+
 :root {
   color-scheme: dark;
-  --bg: #111;
-  --panel: #1b1b1b;
-  --text: #f5f5f5;
-  --muted: rgba(245, 245, 245, 0.75);
 
+  /* Background system */
+  --bg: #0f1115;            /* softer than pure black */
+  --panel: #171a21;
+  --panel-hover: #1d212a;
+
+  /* Text */
+  --text: #f3f4f6;
+  --muted: rgba(243, 244, 246, 0.65);
+
+  /* Cards */
   --card-bg: #ffffff;
   --card-text: #111111;
+
+  /* Borders */
   --border: rgba(255, 255, 255, 0.12);
-  --border-soft: rgba(0, 0, 0, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.06);
+
+  /* Effects */
+  --radius: 16px;
+  --shadow-soft: 0 8px 24px rgba(0,0,0,0.25);
 }
 
 * {
@@ -25,47 +39,108 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Make default buttons readable everywhere */
-button {
-  font: inherit;
+/* ===== Layout helper ===== */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 18px;
 }
 
-/* Reusable UI building blocks */
+/* ===== Typography ===== */
+h1 {
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--muted);
+}
+
+/* ===== Cards (main reading surface) ===== */
 .card {
   background: var(--card-bg);
   color: var(--card-text);
   border: 1px solid var(--border-soft);
-  border-radius: 14px;
-  padding: 14px;
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ===== Buttons ===== */
+button {
+  font: inherit;
 }
 
 .btn {
-  padding: 8px 12px;
-  border-radius: 12px;
+  padding: 9px 14px;
+  border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--text);
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .btn:hover {
-  filter: brightness(1.1);
+  background: var(--panel-hover);
 }
 
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* ===== Section chips (tabs) ===== */
 .chip {
-  padding: 8px 10px;
+  padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text);
   cursor: pointer;
   font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.chip:hover {
+  background: var(--panel);
 }
 
 .chipActive {
   background: #ffffff;
   color: #111111;
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255,255,255,0.4);
+  font-weight: 700;
+}
+
+/* ===== Lists (study readability improvement) ===== */
+ul {
+  padding-left: 18px;
+  line-height: 1.65;
+}
+
+li {
+  margin: 6px 0;
+}
+
+/* ===== Inputs ===== */
+input {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+input:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.35);
 }

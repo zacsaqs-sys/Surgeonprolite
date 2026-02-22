@@ -1,6 +1,220 @@
+console.log("TOPICS FILE LOADED ✅");
 import type { Topic } from "../types/content";
 
 export const TOPICS: Topic[] = [
+  {
+  id: "systemic-response-injury",
+  title: "SYSTEMIC RESPONSE TO INJURY & METABOLIC SUPPORT",
+  subtitle: "Schwartz 11th backbone — surgical physiology every examiner expects",
+  sections: [
+
+    {
+      id: "overview",
+      title: "1) High-Yield Overview",
+      content: [
+        "Core concept (Schwartz foundation):",
+        "All surgical injury — trauma, sepsis, burns, and major operations — triggers a coordinated neuroendocrine and inflammatory response designed to preserve perfusion and provide metabolic substrate for survival and healing.",
+        "",
+        "Exam framing:",
+        "• The response is adaptive initially.",
+        "• Excessive or prolonged response leads to organ dysfunction and catabolism.",
+        "",
+        "Three simultaneous systems activated:",
+        "• Neuroendocrine stress response",
+        "• Innate immune activation",
+        "• Metabolic substrate mobilization",
+        "",
+        "Board line:",
+        "“Surgical injury produces a hypermetabolic, catabolic state mediated by cytokines and stress hormones aimed at maintaining perfusion and substrate delivery.”"
+      ],
+      qna: []
+    },
+
+    {
+      id: "ebb-flow",
+      title: "2) Ebb vs Flow Phase (VERY HIGH-YIELD)",
+      content: [
+        "EBB PHASE (first 12–24 hrs)",
+        "• Occurs during shock/resuscitation",
+        "• ↓ cardiac output",
+        "• ↓ oxygen consumption",
+        "• ↓ metabolic rate",
+        "• Goal = preserve vital organ perfusion",
+        "",
+        "FLOW PHASE (after resuscitation)",
+        "Hyperdynamic state:",
+        "• ↑ cardiac output",
+        "• ↑ oxygen consumption",
+        "• Hypermetabolism",
+        "• Protein catabolism",
+        "• Insulin resistance",
+        "",
+        "Clinical translation:",
+        "Patients begin losing lean muscle despite feeding.",
+        "",
+        "Board trap:",
+        "Persistent catabolism despite adequate calories is NORMAL early after injury."
+      ],
+      qna: []
+    },
+
+    {
+      id: "damps-prr",
+      title: "3) Detection of Injury — DAMPs & PRRs",
+      content: [
+        "Schwartz core physiology:",
+        "Cell injury releases Damage-Associated Molecular Patterns (DAMPs).",
+        "",
+        "Examples:",
+        "• mitochondrial DNA",
+        "• ATP fragments",
+        "• heat shock proteins",
+        "",
+        "DAMPs activate Pattern Recognition Receptors (PRRs):",
+        "• Toll-like receptors (TLR)",
+        "• NOD-like receptors",
+        "",
+        "Result:",
+        "→ cytokine cascade",
+        "→ systemic inflammatory response (SIRS).",
+        "",
+        "Clinical insight:",
+        "Sterile trauma can cause SIRS WITHOUT infection."
+      ],
+      qna: []
+    },
+
+    {
+      id: "neuroendocrine",
+      title: "4) Neuroendocrine Response",
+      content: [
+        "Major hormones released:",
+        "• Catecholamines (epinephrine/norepinephrine)",
+        "• Cortisol",
+        "• Glucagon",
+        "• Growth hormone",
+        "",
+        "Effects:",
+        "• Gluconeogenesis ↑",
+        "• Glycogenolysis ↑",
+        "• Lipolysis ↑",
+        "• Protein breakdown ↑",
+        "",
+        "Key exam concept:",
+        "Insulin levels are NORMAL or HIGH — yet hyperglycemia persists.",
+        "",
+        "Reason:",
+        "Peripheral insulin resistance induced by inflammatory cytokines."
+      ],
+      qna: []
+    },
+
+    {
+      id: "insulin-resistance",
+      title: "5) Surgical Insulin Resistance (Clinical Application)",
+      content: [
+        "Example case:",
+        "70-kg male POD2 after laparotomy.",
+        "Receiving adequate nutrition but glucose = 220 mg/dL.",
+        "",
+        "Mechanism:",
+        "• TNF-α and IL-6 impair insulin receptor signaling.",
+        "• Muscle and adipose cannot uptake glucose efficiently.",
+        "• Liver continues glucose production.",
+        "",
+        "Result:",
+        "Hyperglycemia despite adequate endogenous insulin.",
+        "",
+        "Why surgeons care:",
+        "Hyperglycemia → infection, poor wound healing, mortality.",
+        "",
+        "Management principle:",
+        "Use insulin therapy to maintain glucose roughly 140–180 mg/dL in critically ill patients.",
+        "",
+        "Board pearl:",
+        "Do NOT chase normal glucose aggressively → avoid hypoglycemia."
+      ],
+      qna: [
+        {
+          id: "sir-q1",
+          question: "Postoperative hyperglycemia despite elevated insulin levels is primarily due to:",
+          choices: [
+            { id: "a", text: "Pancreatic failure" },
+            { id: "b", text: "Insulin resistance from inflammatory cytokines" },
+            { id: "c", text: "Excess dietary glucose only" },
+            { id: "d", text: "Renal glucose loss" }
+          ],
+          answerId: "b",
+          explanation:
+            "Inflammatory mediators impair insulin signaling causing peripheral insulin resistance — a hallmark of surgical stress metabolism."
+        }
+      ]
+    },
+
+    {
+      id: "metabolic-fuel",
+      title: "6) Metabolic Fuel Utilization After Injury",
+      content: [
+        "Carbohydrates:",
+        "• Gluconeogenesis from amino acids and lactate",
+        "• Persistent hepatic glucose output",
+        "",
+        "Protein:",
+        "• Skeletal muscle breakdown",
+        "• Negative nitrogen balance",
+        "",
+        "Lipids:",
+        "• Lipolysis increases",
+        "• Free fatty acids used as energy",
+        "",
+        "Clinical meaning:",
+        "Muscle wasting occurs even with feeding early after injury."
+      ],
+      qna: []
+    },
+
+    {
+      id: "nutrition-principles",
+      title: "7) Nutrition in Surgical Patients (High Yield)",
+      content: [
+        "Golden rule:",
+        "IF THE GUT WORKS → USE IT.",
+        "",
+        "Enteral nutrition benefits:",
+        "• Maintains gut mucosal integrity",
+        "• Reduces bacterial translocation",
+        "• Lower infection risk vs TPN",
+        "",
+        "Start early:",
+        "Early enteral feeding within 24–48 hrs when feasible improves outcomes.",
+        "",
+        "Indications for parenteral nutrition:",
+        "• Nonfunctional GI tract",
+        "• Bowel ischemia",
+        "• High-output fistula not tolerating EN",
+        "",
+        "Board trap:",
+        "TPN is NOT superior to enteral feeding."
+      ],
+      qna: [
+        {
+          id: "sir-q2",
+          question: "Preferred nutritional route in critically ill surgical patients when feasible?",
+          choices: [
+            { id: "a", text: "Total parenteral nutrition" },
+            { id: "b", text: "Enteral nutrition" },
+            { id: "c", text: "IV glucose only" },
+            { id: "d", text: "Delayed feeding" }
+          ],
+          answerId: "b",
+          explanation:
+            "Enteral feeding preserves gut integrity and lowers infectious complications compared with parenteral nutrition."
+        }
+      ]
+    }
+
+  ]
+},
   {
     id: "esophageal-cancer",
     title: "ESOPHAGEAL CANCER (MASTER REVIEW)",
