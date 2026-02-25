@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { addTopicImage, deleteTopicImage, listTopicImages } from "../storage/topicImagesDb";
+import {
+  addTopicImage,
+  deleteTopicImage,
+  listTopicImages
+} from "../storage/topicImagesDb";
 
 type UiImg = {
   id: string;
@@ -17,30 +21,37 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
   const [caption, setCaption] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  // ✅ Keep latest caption without re-binding paste listener
+  const captionRef = useRef("");
+  useEffect(() => {
+    captionRef.current = caption;
+  }, [caption]);
+
   async function load() {
     const data = await listTopicImages(topicId);
 
-    // cleanup old object URLs safely
-    images.forEach((p) => URL.revokeObjectURL(p.url));
-
-    setImages(
-      data
+    // ✅ revoke previous URLs safely using functional update (avoid stale closure)
+    setImages((prev) => {
+      prev.forEach((p) => URL.revokeObjectURL(p.url));
+      return data
         .slice()
         .sort((a, b) => b.createdAt - a.createdAt)
         .map((d) => ({
           ...d,
-          url: URL.createObjectURL(d.blob),
-        }))
-    );
+          url: URL.createObjectURL(d.blob)
+        }));
+    });
   }
 
   useEffect(() => {
-    // load when topic changes
     load().catch(console.error);
 
     // cleanup URLs on unmount/topic change
     return () => {
-      images.forEach((p) => URL.revokeObjectURL(p.url));
+      setImages((prev) => {
+        prev.forEach((p) => URL.revokeObjectURL(p.url));
+        return [];
+      });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topicId]);
@@ -56,7 +67,7 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
       topicId,
       blob: file,
       mime: file.type,
-      caption: caption?.trim() ? caption.trim() : undefined,
+      caption: caption?.trim() ? caption.trim() : undefined
     });
 
     setCaption("");
@@ -80,11 +91,13 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
           const file = item.getAsFile();
           if (!file) continue;
 
+          const cap = captionRef.current?.trim();
+
           await addTopicImage({
             topicId,
             blob: file,
             mime: file.type,
-            caption: caption?.trim() ? caption.trim() : "Pasted image",
+            caption: cap ? cap : "Pasted image"
           });
 
           setCaption("");
@@ -96,7 +109,7 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
 
     window.addEventListener("paste", handlePaste);
     return () => window.removeEventListener("paste", handlePaste);
-  }, [topicId, caption]);
+  }, [topicId]);
 
   // ✅ ESC closes fullscreen image
   useEffect(() => {
@@ -108,13 +121,34 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
   }, []);
 
   return (
-    <div style={{ marginTop: 20, border: "1px solid rgba(0,0,0,0.12)", borderRadius: 16, padding: 14 }}>
-      <div style={{ fontWeight: 900, fontSize: 16 }}>📌 My Study Images</div>
-      <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4 }}>
-        Tip: Screenshot → click anywhere on the page → <strong>Ctrl+V</strong> to paste and save to this topic.
+    <div
+      style={{
+        marginTop: 20,
+        border: "1px solid rgba(0,0,0,0.12)",
+        borderRadius: 16,
+        padding: 14,
+        background: "#fff",
+        color: "#111"
+      }}
+    >
+      <div style={{ fontWeight: 900, fontSize: 16, color: "#111" }}>
+        📌 My Study Images
       </div>
 
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 12, alignItems: "center" }}>
+      <div style={{ fontSize: 12, opacity: 0.75, marginTop: 4, color: "#111" }}>
+        Tip: Screenshot → click anywhere on the page → <strong>Ctrl+V</strong> to
+        paste and save to this topic.
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          gap: 10,
+          flexWrap: "wrap",
+          marginTop: 12,
+          alignItems: "center"
+        }}
+      >
         <input
           placeholder="Caption (optional). Used for upload OR paste."
           value={caption}
@@ -124,6 +158,9 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
             padding: "10px 12px",
             borderRadius: 12,
             border: "1px solid rgba(0,0,0,0.2)",
+            background: "#fff",
+            color: "#111",
+            outline: "none"
           }}
         />
 
@@ -132,12 +169,12 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
           type="file"
           accept="image/*"
           onChange={(e) => upload(e.target.files?.[0] ?? null)}
-          style={{ flex: "0 0 auto" }}
+          style={{ flex: "0 0 auto", color: "#111" }}
         />
       </div>
 
       {images.length === 0 ? (
-        <div style={{ marginTop: 12, fontSize: 13, opacity: 0.75 }}>
+        <div style={{ marginTop: 12, fontSize: 13, opacity: 0.75, color: "#111" }}>
           No saved images yet. Upload or paste screenshots while studying.
         </div>
       ) : (
@@ -146,7 +183,7 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
             gap: 12,
-            marginTop: 12,
+            marginTop: 12
           }}
         >
           {images.map((img) => (
@@ -156,7 +193,10 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
                 border: "1px solid rgba(0,0,0,0.12)",
                 borderRadius: 14,
                 overflow: "hidden",
-                background: "white",
+                background: "#fff",
+                color: "#111",
+                // ✅ reduce annoying black selection flash when clicking tiles
+                userSelect: "none"
               }}
             >
               <img
@@ -168,12 +208,15 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
                   height: 150,
                   objectFit: "cover",
                   cursor: "zoom-in",
+                  display: "block"
                 }}
               />
 
               <div style={{ padding: 10 }}>
-                <div style={{ fontSize: 13, fontWeight: 800 }}>{img.caption ?? "—"}</div>
-                <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4 }}>
+                <div style={{ fontSize: 13, fontWeight: 800, color: "#111" }}>
+                  {img.caption ?? "—"}
+                </div>
+                <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4, color: "#111" }}>
                   {new Date(img.createdAt).toLocaleString()}
                 </div>
 
@@ -185,10 +228,13 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
                     padding: "8px 10px",
                     borderRadius: 12,
                     border: "1px solid rgba(0,0,0,0.2)",
-                    background: "white",
+                    background: "#fff",
+                    color: "#111",
                     cursor: "pointer",
                     fontWeight: 800,
+                    userSelect: "none"
                   }}
+                  onMouseDown={(e) => e.preventDefault()} // ✅ prevents selection highlight
                 >
                   Delete
                 </button>
@@ -209,10 +255,10 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
             alignItems: "center",
             justifyContent: "center",
             zIndex: 9999,
-            padding: 20,
+            padding: 20
           }}
         >
-          <div onClick={(e) => e.stopPropagation()}>
+          <div onClick={(e) => e.stopPropagation()} style={{ userSelect: "none" }}>
             <img
               src={activeImage.url}
               alt={activeImage.caption ?? "saved image"}
@@ -221,6 +267,7 @@ export default function MySavedImages({ topicId }: { topicId: string }) {
                 maxHeight: "95%",
                 borderRadius: 12,
                 boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+                display: "block"
               }}
             />
           </div>

@@ -1,42 +1,115 @@
+/* =====================================================
+   SURGEON PRO — Layout + UI ONLY
+   (NO background control here — theme handles that)
+   ===================================================== */
+
+/* ✅ CRITICAL FIX:
+   Remove Vite template page layout so global theme works */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* =========================
+   Selection highlight
+   ========================= */
+::selection {
+  background: rgba(0, 120, 255, 0.35);
+  color: #fff;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::-moz-selection {
+  background: rgba(0, 120, 255, 0.35);
+  color: #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* =========================
+   Prevent dark click overlays
+   ========================= */
+button,
+.chip,
+.btn {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* Clean focus ring */
+button:focus,
+button:focus-visible,
+.chip:focus,
+.chip:focus-visible,
+.btn:focus,
+.btn:focus-visible {
+  outline: 2px solid rgba(0, 120, 255, 0.55);
+  outline-offset: 2px;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+/* =========================
+   Cards
+   ========================= */
 .card {
-  padding: 2em;
+  padding: 1rem;
+  border-radius: 16px;
+  background: var(--card-bg);
+  color: var(--card-text);
+  border: 1px solid rgba(0,0,0,0.12);
 }
 
-.read-the-docs {
-  color: #888;
+/* =========================
+   Chips (sidebar tabs)
+   ========================= */
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  background: #f2f2f2;
+  color: #111;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.chip:hover {
+  background: #e8e8e8;
+}
+
+.chipActive {
+  background: #111;
+  color: #fff;
+}
+
+.chipActive:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+.btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: #fff;
+  color: #111;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #f4f4f4;
+}
+
+.btn:active {
+  background: #ededed;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
